@@ -56,35 +56,14 @@ namespace WpfMediaDemo
                 b1.Content = "Pause";
             }
         }
-        // Play Button Code
-        /* private void b1_Click(object sender, RoutedEventArgs e)
-         {
-             MediaState ms = MediaState.Play;
-             // start the video using LoadedBehiour
-             me.LoadedBehavior = ms;
-
-
-         }
- // Pause Button Code
-         private void b2_Click(object sender, RoutedEventArgs e)
-         {
-             // pause the media element (me) using same LoadedBehiour property
-             MediaState uc = MediaState.Pause;
-             me.LoadedBehavior = uc;
-         }*/
-        // Stop Button Code
+       
+  // Stop Button Code
         private void b3_Click(object sender, RoutedEventArgs e)
         {
             // stop the running media element using same LoadedBehiour property
             me.LoadedBehavior = MediaState.Stop;
         }
-// Exit Button Code
-        private void b4_Click(object sender, RoutedEventArgs e)
-        {
-        // use static method Exit() of Environment class to exit from the application
-        // now code part is over. just build and debug the project. Now I ll show.
-            Environment.Exit(0);
-        }
+
 // Broswe Button Code
         private void b5_Click(object sender, RoutedEventArgs e)
         {
@@ -152,9 +131,6 @@ namespace WpfMediaDemo
             }
         }
 
-        private void Browse_Btn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
     }
 }
