@@ -18,7 +18,11 @@ using Window = System.Windows.Window;
 using System.IO.Compression;
 using System.IO;
 using System.Diagnostics;
+using System.Windows.Input;
 
+using System.Runtime.InteropServices;
+using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
+using KeyEventHandler = System.Windows.Forms.KeyEventHandler;
 
 namespace WpfMediaDemo
 {
@@ -29,14 +33,20 @@ namespace WpfMediaDemo
 
     public partial class MainWindow : Window
     {
+       
         private bool isPlaying = false;
+
+
+        
         public MainWindow()
         {
             InitializeComponent();
 
             me.LoadedBehavior = MediaState.Manual;
-        }
+            
 
+        }
+       
 
         // Button Click Event Handler
         private void b1_Click(object sender, RoutedEventArgs e)
@@ -65,6 +75,8 @@ namespace WpfMediaDemo
             // stop the running media element using same LoadedBehiour property
             me.LoadedBehavior = MediaState.Stop;
         }
+       
+
 
         // Broswe Button Code
         private void b5_Click(object sender, RoutedEventArgs e)
@@ -80,7 +92,7 @@ namespace WpfMediaDemo
             {
                 OpenFileDialog fd = new OpenFileDialog();
                 // set the filters
-                fd.Filter = "MP3 Files (*.mp3)|*.mp3|MP4 File (*.mp4)|*.mp4|3GP File (*.3gp)|*.3gp|Audio File (*.wma)|*.wma|MOV File (*.mov)|*.mov|AVI File (*.avi)|*.avi|Flash Video(*.flv)|*.flv|Video File (*.wmv)|*.wmv|MPEG-2 File (*.mpeg)|*.mpeg|WebM Video (*.webm)|*.webm|All files (*.*)|*.*";
+                fd.Filter = "MP4 File (*.mp4)|*.mp4|3GP File (*.3gp)|*.3gp|Audio File (*.wma)|*.wma|MOV File (*.mov)|*.mov|AVI File (*.avi)|*.avi|Flash Video(*.flv)|*.flv|Video File (*.wmv)|*.wmv|MPEG-2 File (*.mpeg)|*.mpeg|WebM Video (*.webm)|*.webm|All files (*.*)|*.*";
                 // set the initial directory optional
                 fd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 // display the dialog
@@ -103,6 +115,11 @@ namespace WpfMediaDemo
                     // start the video using LoadedBehiour Property
                     MediaState opt = MediaState.Play;
                     me.LoadedBehavior = opt;
+
+                    //Set Play/Pause button status to default value
+                    isPlaying = true;
+                    b1.Content = "Pause";
+
                 }
                 else
                 {
