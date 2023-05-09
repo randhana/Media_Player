@@ -35,16 +35,13 @@ namespace WpfMediaDemo
     {
        
         private bool isPlaying = false;
-
-
-        
+ 
         public MainWindow()
         {
             InitializeComponent();
 
             me.LoadedBehavior = MediaState.Manual;
             
-
         }
        
 
@@ -74,6 +71,8 @@ namespace WpfMediaDemo
         {
             // stop the running media element using same LoadedBehiour property
             me.LoadedBehavior = MediaState.Stop;
+            me.LoadedBehavior =MediaState.Close;
+            b1.Content = "Play";
         }
        
 
@@ -99,11 +98,11 @@ namespace WpfMediaDemo
                 fd.ShowDialog();
                 // get the currently selected video / audio file path and store it in string variable
                 string filename = fd.FileName;
+
                 if (filename != "")
                 {
                     // display this path of selected video / audio path to the text box called "tb"
                     tb.Text = filename;
-
 
 
                     // now write code for the media play 
@@ -131,13 +130,6 @@ namespace WpfMediaDemo
                 System.Console.WriteLine("Error Text: " + e1.Message);
             }
         }
-
-        //Extract file from ZIP file(psw protected)
-
-
-
-
-
 
         // window_loaded event: called automatically when you run application first
         // this will be useful for preprocessing part. here video will be automatically played when run the application
