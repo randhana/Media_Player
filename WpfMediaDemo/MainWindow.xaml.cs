@@ -35,7 +35,8 @@ namespace WpfMediaDemo
     {
        
         private bool isPlaying = false;
- 
+        private bool isStarted = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -49,7 +50,7 @@ namespace WpfMediaDemo
         private void b1_Click(object sender, RoutedEventArgs e)
         {
 
-            if (me.Source == null) // check if a media file has been selected
+            if (!isStarted) // check if a media file has been selected
             {
                 System.Windows.Forms.MessageBox.Show("No media file selected", "Warning");
             }
@@ -125,6 +126,7 @@ namespace WpfMediaDemo
 
                     //Set Play/Pause button status to default value
                     isPlaying = true;
+                    isStarted = true;
                     b1.Content = "Pause";
 
                 }
