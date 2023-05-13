@@ -48,21 +48,29 @@ namespace WpfMediaDemo
         // Button Click Event Handler
         private void b1_Click(object sender, RoutedEventArgs e)
         {
-            // toggle between play and pause based on the current state
-            if (isPlaying)
+
+            if (me.Source == null) // check if a media file has been selected
             {
-                MediaState uc = MediaState.Pause;
-                me.LoadedBehavior = uc;
-                isPlaying = false;
-                b1.Content = "Play";
+                System.Windows.Forms.MessageBox.Show("No media file selected", "Warning");
             }
             else
             {
-                MediaState ms = MediaState.Play;
-                // start the video using LoadedBehiour
-                me.LoadedBehavior = ms;
-                isPlaying = true;
-                b1.Content = "Pause";
+                // toggle between play and pause based on the current state
+                if (isPlaying)
+                {
+                    MediaState uc = MediaState.Pause;
+                    me.LoadedBehavior = uc;
+                    isPlaying = false;
+                    b1.Content = "Play";
+                }
+                else
+                {
+                    MediaState ms = MediaState.Play;
+                    // start the video using LoadedBehiour
+                    me.LoadedBehavior = ms;
+                    isPlaying = true;
+                    b1.Content = "Pause";
+                }
             }
         }
 
