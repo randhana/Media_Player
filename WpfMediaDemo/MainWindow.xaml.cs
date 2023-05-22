@@ -90,8 +90,6 @@ namespace WpfMediaDemo
         private void b5_Click(object sender, RoutedEventArgs e)
         {
 
-
-
             // this will play any video / audio files dynamically
             // use openfile file dialog. WPF does not support openfile dialog. So we should add the WinForms reference
             // here. I ll show now. watch plz.

@@ -35,7 +35,9 @@
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Name="status" Margin="0,10,0,0"></TextBlock>
         </StackPanel>
+        <Button x:Name="b3_Copy" Content="&lt;&lt;" Canvas.Left="229" Canvas.Top="577" Width="99" Height="47" Background="#FFD9D5D4" FontWeight="Bold" FontSize="18" Click="b3_Click" BorderThickness="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button x:Name="b3_Copy1" Content="&gt;&gt;" Canvas.Left="332" Canvas.Top="579" Width="99" Height="46" Background="#FFD9D5D4" FontWeight="Bold" FontSize="18" Click="b3_Click" BorderThickness="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.358,0.294"/>
     </Canvas>
-    
+
 
 </Window>
