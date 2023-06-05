@@ -57,22 +57,7 @@ namespace WpfMediaDemo
             }
             else
             {
-                // toggle between play and pause based on the current state
-                if (isPlaying)
-                {
-                    MediaState uc = MediaState.Pause;
-                    me.LoadedBehavior = uc;
-                    isPlaying = false;
-                    b1.Content = "Play";
-                }
-                else
-                {
-                    MediaState ms = MediaState.Play;
-                    // start the video using LoadedBehiour
-                    me.LoadedBehavior = ms;
-                    isPlaying = true;
-                    b1.Content = "Pause";
-                }
+                PauseButton();
             }
         }
 
@@ -176,15 +161,7 @@ namespace WpfMediaDemo
             }
             else
             {
-                // Calculate the new position by subtracting 1 minute from the current position
-                TimeSpan newPosition = me.Position.Subtract(TimeSpan.FromSeconds(10));
-
-                // Make sure the new position is within the media duration
-                if (newPosition.TotalSeconds >= 0)
-                {
-                    // Set the new position
-                    me.Position = newPosition;
-                }
+                SeekBackward();
             }
         }
 
@@ -198,15 +175,75 @@ namespace WpfMediaDemo
             }
             else
             {
-                // Calculate the new position by adding 1 minute to the current position
-                TimeSpan newPosition = me.Position.Add(TimeSpan.FromSeconds(10));
+                SeekForward();
+            }
+        }
 
-                // Make sure the new position is within the media duration
-                if (newPosition.TotalSeconds <= me.NaturalDuration.TimeSpan.TotalSeconds)
-                {
-                    // Set the new position
-                    me.Position = newPosition;
-                }
+        private void PauseButton()
+        {
+            // toggle between play and pause based on the current state
+            if (isPlaying)
+            {
+                MediaState uc = MediaState.Pause;
+                me.LoadedBehavior = uc;
+                isPlaying = false;
+                b1.Content = "Play";
+            }
+            else
+            {
+                MediaState ms = MediaState.Play;
+                // start the video using LoadedBehiour
+                me.LoadedBehavior = ms;
+                isPlaying = true;
+                b1.Content = "Pause";
+            }
+        }
+        
+        // Seek backward
+        private void SeekBackward()
+        {
+            TimeSpan currentPosition = me.Position;
+            TimeSpan backwardPosition = currentPosition.Subtract(TimeSpan.FromSeconds(10)); // 1 minute backward
+            if (backwardPosition < TimeSpan.Zero)
+            {
+                backwardPosition = TimeSpan.Zero;
+            }
+            me.Position = backwardPosition;
+        }
+
+        // Seek forward
+        private void SeekForward()
+        {
+            TimeSpan currentPosition = me.Position;
+            TimeSpan forwardPosition = currentPosition.Add(TimeSpan.FromSeconds(10)); // 1 minute forward
+            if (forwardPosition > me.NaturalDuration.TimeSpan)
+            {
+                forwardPosition = me.NaturalDuration.TimeSpan;
+            }
+            me.Position = forwardPosition;
+        }
+
+        private void keyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+
+        }
+        // Handle key presses for arrow keys
+        private void keyPress(object sender, System.Windows.Input.KeyEventArgs e)
+
+        {
+            if (e.Key == Key.Left)
+
+            {
+                SeekBackward();
+            }
+            else if (e.Key == Key.Right)
+            {
+                SeekForward();
+            }
+            else if (e.Key == Key.P)
+            {
+                PauseButton();
+                
             }
         }
     }

@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfMediaDemo"
         mc:Ignorable="d"
-        Title="Media Player" Height="670" Width="1386" ResizeMode="CanMinimize" WindowStartupLocation="CenterOwner" BorderThickness="3,3,3,6" BorderBrush="#FF181817" FontSize="14" Loaded="window_loaded" Background="{x:Null}">
-    <Canvas HorizontalAlignment="Center" Height="644" VerticalAlignment="Top" Width="1380" RenderTransformOrigin="0.5,0.5" Background="#FFC5C1C1">
+        Title="Media Player" Height="670" Width="1386" ResizeMode="CanMinimize" WindowStartupLocation="CenterOwner" BorderThickness="3,3,3,6" BorderBrush="#FF181817" FontSize="14" Loaded="window_loaded" Background="{x:Null}"  Focusable="True">
+    <Canvas HorizontalAlignment="Center" Height="644" VerticalAlignment="Top" Width="1380" RenderTransformOrigin="0.5,0.5" Background="#FFC5C1C1" KeyDown="keyPress" KeyUp="keyUp">
         <Canvas.RenderTransform>
             <TransformGroup>
                 <ScaleTransform/>
@@ -30,7 +30,7 @@
         <Button x:Name="b1" Content="Play" Canvas.Left="17" Canvas.Top="575" Width="105" Height="47" Background="#FFD9D5D4" FontWeight="Bold" FontSize="18" Click="b1_Click" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0,0,0,0"/>
         <Button x:Name="b3" Content="Stop" Canvas.Left="125" Canvas.Top="576" Width="99" Height="47" Background="#FFD9D5D4" FontWeight="Bold" FontSize="18" Click="b3_Click" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0,0,0,0"/>
         <Button x:Name="Browse" Content="Browse Video / Audio" Canvas.Left="1096" Canvas.Top="10" Width="269" Height="48" Background="#FFC8C3CC" FontWeight="Bold" BorderBrush="#FFFAF6F6" FontSize="18" Click="b5_Click"/>
-        <TextBox x:Name="tb" Height="46" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="10" Width="1081"/>
+        <TextBox x:Name="tb" Height="46" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="10" Width="1081" IsEnabled="False"/>
         <Image x:Name="img" Stretch="None"/>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Name="status" Margin="0,10,0,0"></TextBlock>
