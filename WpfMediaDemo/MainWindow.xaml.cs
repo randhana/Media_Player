@@ -23,6 +23,7 @@ using System.Windows.Input;
 using System.Runtime.InteropServices;
 using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 using KeyEventHandler = System.Windows.Forms.KeyEventHandler;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace WpfMediaDemo
 {
@@ -82,6 +83,7 @@ namespace WpfMediaDemo
             me.LoadedBehavior = MediaState.Stop;
             me.LoadedBehavior =MediaState.Close;
             b1.Content = "Play";
+            
         }
        
 
@@ -164,9 +166,48 @@ namespace WpfMediaDemo
             }
         }
 
+        //Backward Button Code
+        private void b6_Click(object sender, RoutedEventArgs e)
+        {
+            // Check if a media file has been selected
+            if (!isStarted)
+            {
+                System.Windows.Forms.MessageBox.Show("No media file selected", "Warning");
+            }
+            else
+            {
+                // Calculate the new position by subtracting 1 minute from the current position
+                TimeSpan newPosition = me.Position.Subtract(TimeSpan.FromSeconds(10));
 
+                // Make sure the new position is within the media duration
+                if (newPosition.TotalSeconds >= 0)
+                {
+                    // Set the new position
+                    me.Position = newPosition;
+                }
+            }
+        }
 
+        //Forward Buttion Code
+        private void b7_Click(object sender, RoutedEventArgs e)
+        {
+            // Check if a media file has been selected
+            if (!isStarted)
+            {
+                System.Windows.Forms.MessageBox.Show("No media file selected", "Warning");
+            }
+            else
+            {
+                // Calculate the new position by adding 1 minute to the current position
+                TimeSpan newPosition = me.Position.Add(TimeSpan.FromSeconds(10));
 
-
+                // Make sure the new position is within the media duration
+                if (newPosition.TotalSeconds <= me.NaturalDuration.TimeSpan.TotalSeconds)
+                {
+                    // Set the new position
+                    me.Position = newPosition;
+                }
+            }
+        }
     }
 }
