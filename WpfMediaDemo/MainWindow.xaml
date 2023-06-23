@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:WpfMediaDemo"
         mc:Ignorable="d"
         Title="Media Player" Height="670" Width="1386" ResizeMode="CanMinimize" WindowStartupLocation="CenterOwner" BorderThickness="3,3,3,6" BorderBrush="#FF181817" FontSize="14" Loaded="window_loaded" Background="{x:Null}"  Focusable="True">
+
     <Canvas HorizontalAlignment="Center" Height="644" VerticalAlignment="Top" Width="1380" RenderTransformOrigin="0.5,0.5" Background="#FFC5C1C1" KeyDown="keyPress" KeyUp="keyUp">
         <Canvas.RenderTransform>
             <TransformGroup>
@@ -16,7 +17,7 @@
             </TransformGroup>
         </Canvas.RenderTransform>
         <Border BorderBrush="Black" BorderThickness="1" Height="504" Canvas.Left="11" Canvas.Top="61" Width="1351" Background="#FFF6F1F1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <MediaElement x:Name="me" Margin="3,8,-1,0" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+            <MediaElement x:Name="me" Margin="3,8,-1,0" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Source="/player_logo.png">
                 <MediaElement.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -27,6 +28,7 @@
                 </MediaElement.RenderTransform>
             </MediaElement>
         </Border>
+
         <Button x:Name="b1" Content="Play" Canvas.Left="17" Canvas.Top="575" Width="105" Height="47" Background="#FFD9D5D4" FontWeight="Bold" FontSize="18" Click="b1_Click" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0,0,0,0"/>
         <Button x:Name="b3" Content="Stop" Canvas.Left="125" Canvas.Top="576" Width="99" Height="47" Background="#FFD9D5D4" FontWeight="Bold" FontSize="18" Click="b3_Click" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0,0,0,0"/>
         <Button x:Name="Browse" Content="Browse Video / Audio" Canvas.Left="1096" Canvas.Top="10" Width="269" Height="48" Background="#FFC8C3CC" FontWeight="Bold" BorderBrush="#FFFAF6F6" FontSize="18" Click="b5_Click"/>
@@ -37,7 +39,11 @@
         </StackPanel>
         <Button x:Name="backward" Content="&lt;&lt;" Canvas.Left="229" Canvas.Top="577" Width="99" Height="47" Background="#FFD9D5D4" FontWeight="Bold" FontSize="18" Click="b6_Click" BorderThickness="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Button x:Name="forward" Content="&gt;&gt;" Canvas.Left="332" Canvas.Top="579" Width="99" Height="46" Background="#FFD9D5D4" FontWeight="Bold" FontSize="18" Click="b7_Click" BorderThickness="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.358,0.294"/>
-        
+        <Image x:Name="logoImage" Source="player_logo.png" Stretch="Uniform" Visibility="Collapsed"/>
+        <Slider Canvas.Left="1239" Canvas.Top="585" Width="120" HorizontalAlignment="Center" Height="28" VerticalAlignment="Top" BorderBrush="{x:Null}" Foreground="#FFE5E5E5"/>
+        <Image Height="50" Canvas.Left="1203" Canvas.Top="569" Width="29" Source="speaker.png"/>
+
+
     </Canvas>
 
 

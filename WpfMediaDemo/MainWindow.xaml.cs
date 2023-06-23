@@ -67,6 +67,11 @@ namespace WpfMediaDemo
             // stop the running media element using same LoadedBehiour property
             me.LoadedBehavior = MediaState.Stop;
             me.LoadedBehavior =MediaState.Close;
+
+            // Show the logo image and hide the MediaElement
+            logoImage.Visibility = Visibility.Visible;
+            me.Visibility = Visibility.Collapsed;
+
             b1.Content = "Play";
             
         }
