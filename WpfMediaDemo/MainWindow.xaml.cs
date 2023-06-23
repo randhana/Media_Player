@@ -43,6 +43,7 @@ namespace WpfMediaDemo
             InitializeComponent();
 
             me.LoadedBehavior = MediaState.Manual;
+            me.Volume = VolumeSlider.Value / 100.0; // Set initial volume based on the slider value
             
         }
        
@@ -250,6 +251,20 @@ namespace WpfMediaDemo
                 PauseButton();
                 
             }
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            
+            double volume = VolumeSlider.Value;
+            double volumePercentage = volume / VolumeSlider.Maximum; // Calculate the volume percentage
+
+            double adjustedVolume = volumePercentage * 100.0; // Scale the volume to a range of 0 to 100
+
+            me.Volume = adjustedVolume / 100.0; // Scale the adjusted volume to a range of 0.0 to 1.0
+           
+
+            lblVolumePrecentage.Content = ((int) adjustedVolume).ToString() +"%";   //show current volume as a precentage
         }
     }
 }

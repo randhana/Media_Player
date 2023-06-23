@@ -40,8 +40,9 @@
         <Button x:Name="backward" Content="&lt;&lt;" Canvas.Left="229" Canvas.Top="577" Width="99" Height="47" Background="#FFD9D5D4" FontWeight="Bold" FontSize="18" Click="b6_Click" BorderThickness="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Button x:Name="forward" Content="&gt;&gt;" Canvas.Left="332" Canvas.Top="579" Width="99" Height="46" Background="#FFD9D5D4" FontWeight="Bold" FontSize="18" Click="b7_Click" BorderThickness="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.358,0.294"/>
         <Image x:Name="logoImage" Source="player_logo.png" Stretch="Uniform" Visibility="Collapsed"/>
-        <Slider Canvas.Left="1239" Canvas.Top="585" Width="120" HorizontalAlignment="Center" Height="28" VerticalAlignment="Top" BorderBrush="{x:Null}" Foreground="#FFE5E5E5"/>
-        <Image Height="50" Canvas.Left="1203" Canvas.Top="569" Width="29" Source="speaker.png"/>
+        <Slider x:Name="VolumeSlider" Canvas.Left="1239" Canvas.Top="585" Width="120" HorizontalAlignment="Center" Height="28" VerticalAlignment="Top" BorderBrush="{x:Null}" Foreground="#FFE5E5E5" ValueChanged="Slider_ValueChanged"/>
+        <Image Height="48" Canvas.Left="1203" Canvas.Top="571" Width="24" Source="speaker.png"/>
+        <Label x:Name="lblVolumePrecentage" Content="" Canvas.Left="1233" Canvas.Top="597" Height="26" Width="67" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
 
     </Canvas>
