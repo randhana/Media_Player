@@ -19,11 +19,12 @@ using System.IO.Compression;
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Input;
-
 using System.Runtime.InteropServices;
 using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 using KeyEventHandler = System.Windows.Forms.KeyEventHandler;
 using MessageBox = System.Windows.Forms.MessageBox;
+
+
 
 namespace WpfMediaDemo
 {
@@ -34,7 +35,9 @@ namespace WpfMediaDemo
 
     public partial class MainWindow : Window
     {
-       
+        //Full screen
+        private bool isFullScreen;
+
         private bool isPlaying = false;
         private bool isStarted = false;
 
@@ -272,29 +275,38 @@ namespace WpfMediaDemo
         //Full screen
         private void me_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            
             DateTime clickTime = DateTime.Now;
             TimeSpan elapsedTime = clickTime - lastClickTime;
             lastClickTime = clickTime;
 
-            if (elapsedTime.TotalMilliseconds < 300) // Check if the elapsed time is less than 300 milliseconds (indicating a double-click)
+            if (elapsedTime.TotalMilliseconds < 500) // Check if the elapsed time is less than 500 milliseconds (indicating a double-click)
             {
+                
                 ToggleFullScreen();
             }
         }
 
         private void ToggleFullScreen()
         {
+            var fullScreen = new FullScreen();
+
             if (WindowState == WindowState.Maximized)
             {
-                WindowState = WindowState.Normal;
-                WindowStyle = WindowStyle.SingleBorderWindow;
+                
             }
             else
             {
-                WindowState = WindowState.Maximized;
-                WindowStyle = WindowStyle.None;
+                this.Hide();
+                fullScreen.Show();
+                fullScreen.WindowStyle = WindowStyle.None;
+                fullScreen.WindowState = WindowState.Maximized;
+                fullScreen.ResizeMode = ResizeMode.NoResize;
+                fullScreen.Topmost = true;
+                fullScreen.FullScreenMediaPlayer.Focus();
             }
         }
 
+        
     }
 }
