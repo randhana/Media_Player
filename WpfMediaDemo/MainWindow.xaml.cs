@@ -38,6 +38,8 @@ namespace WpfMediaDemo
         private bool isPlaying = false;
         private bool isStarted = false;
 
+        private DateTime lastClickTime = DateTime.MinValue;   //for check double click
+
         public MainWindow()
         {
             InitializeComponent();
@@ -266,5 +268,33 @@ namespace WpfMediaDemo
 
             lblVolumePrecentage.Content = ((int) adjustedVolume).ToString() +"%";   //show current volume as a precentage
         }
+
+        //Full screen
+        private void me_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DateTime clickTime = DateTime.Now;
+            TimeSpan elapsedTime = clickTime - lastClickTime;
+            lastClickTime = clickTime;
+
+            if (elapsedTime.TotalMilliseconds < 300) // Check if the elapsed time is less than 300 milliseconds (indicating a double-click)
+            {
+                ToggleFullScreen();
+            }
+        }
+
+        private void ToggleFullScreen()
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                WindowState = WindowState.Normal;
+                WindowStyle = WindowStyle.SingleBorderWindow;
+            }
+            else
+            {
+                WindowState = WindowState.Maximized;
+                WindowStyle = WindowStyle.None;
+            }
+        }
+
     }
 }
