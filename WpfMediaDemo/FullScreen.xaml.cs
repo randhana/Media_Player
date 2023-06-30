@@ -21,6 +21,7 @@ namespace WpfMediaDemo
     {
         private bool isFullScreen;
         private DateTime lastClickTime = DateTime.MinValue;   //for check double click
+        string currentFilename;
 
         public FullScreen()
         {
@@ -38,6 +39,7 @@ namespace WpfMediaDemo
             {
 
                 ToggleFullScreen();
+                //ToggleFullScreenWithPlaybackPosition();
             }
             
 
@@ -67,7 +69,35 @@ namespace WpfMediaDemo
             isFullScreen = !isFullScreen;
         }
 
-        
+        public void playCurrentMedia(string filename)
+        {
+            currentFilename = filename;
+            if (filename != "")
+            {
+                
+
+
+                // now write code for the media play 
+                Uri u = new Uri(filename);
+                // set this URI object to Media Element
+                FullScreenMediaPlayer.Source = u;
+                // set the volume (optional)
+                FullScreenMediaPlayer.Volume = 100.5;
+                // start the video using LoadedBehiour Property
+                MediaState opt = MediaState.Play;
+                FullScreenMediaPlayer.LoadedBehavior = opt;
+
+                
+
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("No Selection", "Empty");
+            }
+
+        }
+
+
 
     }
 }
