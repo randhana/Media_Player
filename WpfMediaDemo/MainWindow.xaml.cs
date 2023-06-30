@@ -23,11 +23,10 @@ using System.Runtime.InteropServices;
 using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 using KeyEventHandler = System.Windows.Forms.KeyEventHandler;
 using MessageBox = System.Windows.Forms.MessageBox;
-
-
-
 namespace WpfMediaDemo
 {
+
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -37,6 +36,7 @@ namespace WpfMediaDemo
     {
         //Full screen
         private bool isFullScreen;
+        private string currentFilename;
 
         private bool isPlaying = false;
         private bool isStarted = false;
@@ -87,54 +87,8 @@ namespace WpfMediaDemo
         // Broswe Button Code
         private void b5_Click(object sender, RoutedEventArgs e)
         {
-
-            // this will play any video / audio files dynamically
-            // use openfile file dialog. WPF does not support openfile dialog. So we should add the WinForms reference
-            // here. I ll show now. watch plz.
-            // create open file dialog
-            try
-            {
-                OpenFileDialog fd = new OpenFileDialog();
-                // set the filters
-                fd.Filter = "MP4 File (*.mp4)|*.mp4|3GP File (*.3gp)|*.3gp|Audio File (*.wma)|*.wma|MOV File (*.mov)|*.mov|AVI File (*.avi)|*.avi|Flash Video(*.flv)|*.flv|Video File (*.wmv)|*.wmv|MPEG-2 File (*.mpeg)|*.mpeg|WebM Video (*.webm)|*.webm|All files (*.*)|*.*";
-                // set the initial directory optional
-                fd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                // display the dialog
-                fd.ShowDialog();
-                // get the currently selected video / audio file path and store it in string variable
-                string filename = fd.FileName;
-
-                if (filename != "")
-                {
-                    // display this path of selected video / audio path to the text box called "tb"
-                    tb.Text = filename;
-
-
-                    // now write code for the media play 
-                    Uri u = new Uri(filename);
-                    // set this URI object to Media Element
-                    me.Source = u;
-                    // set the volume (optional)
-                    me.Volume = 100.5;
-                    // start the video using LoadedBehiour Property
-                    MediaState opt = MediaState.Play;
-                    me.LoadedBehavior = opt;
-
-                    //Set Play/Pause button status to default value
-                    isPlaying = true;
-                    isStarted = true;
-                    b1.Content = "Pause";
-
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show("No Selection", "Empty");
-                }
-            }
-            catch (Exception e1)
-            {
-                System.Console.WriteLine("Error Text: " + e1.Message);
-            }
+            
+            playMedia(openMediaFile());
         }
 
         // window_loaded event: called automatically when you run application first
@@ -161,6 +115,65 @@ namespace WpfMediaDemo
                 System.Console.WriteLine("Error Message: " + ex.Message);
             }
         }
+
+        private string openMediaFile()
+        {
+            // this will play any video / audio files dynamically
+            // use openfile file dialog. WPF does not support openfile dialog. So we should add the WinForms reference
+            // here. I ll show now. watch plz.
+            // create open file dialog
+            try
+            {
+                OpenFileDialog fd = new OpenFileDialog();
+                // set the filters
+                fd.Filter = "MP4 File (*.mp4)|*.mp4|3GP File (*.3gp)|*.3gp|Audio File (*.wma)|*.wma|MOV File (*.mov)|*.mov|AVI File (*.avi)|*.avi|Flash Video(*.flv)|*.flv|Video File (*.wmv)|*.wmv|MPEG-2 File (*.mpeg)|*.mpeg|WebM Video (*.webm)|*.webm|All files (*.*)|*.*";
+                // set the initial directory optional
+                fd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                // display the dialog
+                fd.ShowDialog();
+                // get the currently selected video / audio file path and store it in string variable
+                string filename = fd.FileName;
+                return filename;
+            }
+            catch (Exception e1)
+            {
+                System.Console.WriteLine("Error Text: " + e1.Message);
+            }
+            return null;
+        }
+
+        public void playMedia(string filename)
+        {
+            currentFilename = filename;
+            if (filename != "")
+            {
+                // display this path of selected video / audio path to the text box called "tb"
+               // tb.Text = filename;
+
+
+                // now write code for the media play 
+                Uri u = new Uri(filename);
+                // set this URI object to Media Element
+                me.Source = u;
+                // set the volume (optional)
+                me.Volume = 100.5;
+                // start the video using LoadedBehiour Property
+                MediaState opt = MediaState.Play;
+                me.LoadedBehavior = opt;
+
+                //Set Play/Pause button status to default value
+                isPlaying = true;
+                isStarted = true;
+                b1.Content = "Pause";
+
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("No Selection", "Empty");
+            }
+            
+        }
+
 
         //Backward Button Code
         private void b6_Click(object sender, RoutedEventArgs e)
@@ -284,12 +297,16 @@ namespace WpfMediaDemo
             {
                 
                 ToggleFullScreen();
+                
+
+                
             }
         }
 
         private void ToggleFullScreen()
         {
             var fullScreen = new FullScreen();
+            
 
             if (WindowState == WindowState.Maximized)
             {
@@ -299,6 +316,8 @@ namespace WpfMediaDemo
             {
                 this.Hide();
                 fullScreen.Show();
+                fullScreen.playCurrentMedia(currentFilename);
+
                 fullScreen.WindowStyle = WindowStyle.None;
                 fullScreen.WindowState = WindowState.Maximized;
                 fullScreen.ResizeMode = ResizeMode.NoResize;
@@ -307,6 +326,9 @@ namespace WpfMediaDemo
             }
         }
 
-        
+        private void tb_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
