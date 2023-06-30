@@ -148,7 +148,7 @@ namespace WpfMediaDemo
             if (filename != "")
             {
                 // display this path of selected video / audio path to the text box called "tb"
-                tb.Text = filename;
+               // tb.Text = filename;
 
 
                 // now write code for the media play 
