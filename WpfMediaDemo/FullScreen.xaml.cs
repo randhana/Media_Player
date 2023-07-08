@@ -21,7 +21,9 @@ namespace WpfMediaDemo
     {
         private bool isFullScreen;
         private DateTime lastClickTime = DateTime.MinValue;   //for check double click
-        string currentFilename;
+        public string currentFilename;
+        private TimeSpan playbackPosition;
+
 
         public FullScreen()
         {
@@ -49,6 +51,7 @@ namespace WpfMediaDemo
         private void ToggleFullScreen()
 
         {
+            
            
             if (!isFullScreen)
             {
@@ -60,17 +63,46 @@ namespace WpfMediaDemo
             }
             else
             {
-                WindowStyle = WindowStyle.SingleBorderWindow;
-                WindowState = WindowState.Normal;
-                ResizeMode = ResizeMode.CanResize;
-                Topmost = false;
-            }
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.UpdateCurrentFilename(currentFilename);
+
+
+                playbackPosition = FullScreenMediaPlayer.Position;
+
+                // Stop the media playback
+                FullScreenMediaPlayer.Source = null;
+                FullScreenMediaPlayer.LoadedBehavior = MediaState.Manual;
+                FullScreenMediaPlayer.Position = TimeSpan.Zero;
+                FullScreenMediaPlayer.Stop();
+                FullScreenMediaPlayer.Close();
+                this.Hide();
+
+                mainWindow.Show();
+                mainWindow.playCurrentMedia(currentFilename, playbackPosition);
+
+
+               /* mainWindow.WindowStyle = WindowStyle.None;
+                mainWindow.WindowState = WindowState.Maximized;
+                mainWindow.ResizeMode = ResizeMode.NoResize;
+                mainWindow.Topmost = true;
+                mainWindow.Focus();*/
+
+            
+
+            /*WindowStyle = WindowStyle.SingleBorderWindow;
+            WindowState = WindowState.Normal;
+            ResizeMode = ResizeMode.CanResize;
+            Topmost = false;*/
+        }
 
             isFullScreen = !isFullScreen;
         }
 
-        public void playCurrentMedia(string filename)
+        
+        public void playCurrentMedia(string filename, TimeSpan position)
         {
+            currentFilename = filename;
+            playbackPosition = position; // Store the playback position
             currentFilename = filename;
             if (filename != "")
             {
@@ -83,11 +115,23 @@ namespace WpfMediaDemo
                 FullScreenMediaPlayer.Source = u;
                 // set the volume (optional)
                 FullScreenMediaPlayer.Volume = 100.5;
-                // start the video using LoadedBehiour Property
+                
+                // Attach a handler for the MediaOpened event to seek to the stored playback position
+                FullScreenMediaPlayer.MediaOpened += (sender, e) =>
+                {
+                    // Check if the stored playback position is within the video's duration
+                    if (playbackPosition < FullScreenMediaPlayer.NaturalDuration.TimeSpan)
+                    {
+                        // Seek to the stored playback position
+                        FullScreenMediaPlayer.Position = playbackPosition;
+                    }
+                };
+
+                // Start the video using the LoadedBehavior property
                 MediaState opt = MediaState.Play;
                 FullScreenMediaPlayer.LoadedBehavior = opt;
 
-                
+
 
             }
             else
@@ -96,6 +140,7 @@ namespace WpfMediaDemo
             }
 
         }
+
 
 
 

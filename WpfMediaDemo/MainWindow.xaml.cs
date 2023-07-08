@@ -36,6 +36,8 @@ namespace WpfMediaDemo
     {
         //Full screen
         private bool isFullScreen;
+        private TimeSpan playbackPosition;
+
         private string currentFilename;
 
         private bool isPlaying = false;
@@ -73,6 +75,7 @@ namespace WpfMediaDemo
             // stop the running media element using same LoadedBehiour property
             me.LoadedBehavior = MediaState.Stop;
             me.LoadedBehavior =MediaState.Close;
+            
 
             // Show the logo image and hide the MediaElement
             logoImage.Visibility = Visibility.Visible;
@@ -82,7 +85,6 @@ namespace WpfMediaDemo
             
         }
        
-
 
         // Broswe Button Code
         private void b5_Click(object sender, RoutedEventArgs e)
@@ -132,7 +134,7 @@ namespace WpfMediaDemo
                 // display the dialog
                 fd.ShowDialog();
                 // get the currently selected video / audio file path and store it in string variable
-                string filename = fd.FileName;
+                string filename = fd.FileName + currentFilename;
                 return filename;
             }
             catch (Exception e1)
@@ -145,7 +147,7 @@ namespace WpfMediaDemo
         public void playMedia(string filename)
         {
             currentFilename = filename;
-            if (filename != "")
+            if (currentFilename != "")
             {
                 // display this path of selected video / audio path to the text box called "tb"
                // tb.Text = filename;
@@ -314,9 +316,19 @@ namespace WpfMediaDemo
             }
             else
             {
+
+                fullScreen.playCurrentMedia(currentFilename, me.Position);
+
+                // Stop the media playback
+                me.Source = null;
+                me.LoadedBehavior = MediaState.Manual;
+                me.Position = TimeSpan.Zero;
+                me.Stop();
+                me.Close();
                 this.Hide();
+
                 fullScreen.Show();
-                fullScreen.playCurrentMedia(currentFilename);
+               
 
                 fullScreen.WindowStyle = WindowStyle.None;
                 fullScreen.WindowState = WindowState.Maximized;
@@ -324,6 +336,54 @@ namespace WpfMediaDemo
                 fullScreen.Topmost = true;
                 fullScreen.FullScreenMediaPlayer.Focus();
             }
+        }
+
+        public void UpdateCurrentFilename(string filename)
+        {
+            currentFilename = filename;
+        }
+
+        public void playCurrentMedia(string filename, TimeSpan position)
+        {
+            currentFilename = filename;
+            playbackPosition = position; // Store the playback position
+            currentFilename = filename;
+            if (filename != "")
+            {
+
+                // now write code for the media play 
+                Uri u = new Uri(filename);
+                // set this URI object to Media Element
+                me.Source = u;
+                // set the volume (optional)
+                me.Volume = 100.5;
+
+                // Attach a handler for the MediaOpened event to seek to the stored playback position
+                me.MediaOpened += (sender, e) =>
+                {
+                    // Check if the stored playback position is within the video's duration
+                    if (playbackPosition < me.NaturalDuration.TimeSpan)
+                    {
+                        // Seek to the stored playback position
+                        me.Position = playbackPosition;
+                    }
+                };
+
+                // Start the video using the LoadedBehavior property
+                MediaState opt = MediaState.Play;
+                me.LoadedBehavior = opt;
+
+                isStarted = true;
+                b1.Content = "Pause";
+
+
+
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("No Selection", "Empty");
+            }
+
         }
 
         private void tb_TextChanged(object sender, TextChangedEventArgs e)
