@@ -81,10 +81,11 @@ namespace WpfMediaDemo
             logoImage.Visibility = Visibility.Visible;
             me.Visibility = Visibility.Collapsed;
 
-            b1.Content = "Play";
-            
+            ChangeIcon("play.png");
+
+
         }
-       
+
 
         // Broswe Button Code
         private void b5_Click(object sender, RoutedEventArgs e)
@@ -166,7 +167,8 @@ namespace WpfMediaDemo
                 //Set Play/Pause button status to default value
                 isPlaying = true;
                 isStarted = true;
-                b1.Content = "Pause";
+                ChangeIcon("pause.png");
+
 
             }
             else
@@ -204,6 +206,15 @@ namespace WpfMediaDemo
                 SeekForward();
             }
         }
+        private void ChangeIcon(string icon)
+        {
+            // Load the new icon image using the provided icon filename
+            Uri newIconUri = new Uri($"Resources\\{icon}", UriKind.Relative);
+            BitmapImage newIconImage = new BitmapImage(newIconUri);
+
+            // Set the new icon image as the source for the Image element
+            btnImage.Source = newIconImage;
+        }
 
         private void PauseButton()
         {
@@ -213,7 +224,8 @@ namespace WpfMediaDemo
                 MediaState uc = MediaState.Pause;
                 me.LoadedBehavior = uc;
                 isPlaying = false;
-                b1.Content = "Play";
+                ChangeIcon("play.png");
+
             }
             else
             {
@@ -221,7 +233,8 @@ namespace WpfMediaDemo
                 // start the video using LoadedBehiour
                 me.LoadedBehavior = ms;
                 isPlaying = true;
-                b1.Content = "Pause";
+                ChangeIcon("pause.png");
+
             }
         }
         
@@ -374,7 +387,8 @@ namespace WpfMediaDemo
                 me.LoadedBehavior = opt;
 
                 isStarted = true;
-                b1.Content = "Pause";
+                ChangeIcon("pause.png");
+
 
 
 
@@ -389,6 +403,16 @@ namespace WpfMediaDemo
         private void tb_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void me_Drop(object sender, System.Windows.DragEventArgs e)
+        {
+            MessageBox.Show("Drag");
+        }
+
+        private void me_DragOver(object sender, System.Windows.DragEventArgs e)
+        {
+            MessageBox.Show("Drag");
         }
     }
 }

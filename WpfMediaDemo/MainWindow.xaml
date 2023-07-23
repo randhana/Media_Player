@@ -6,6 +6,11 @@
         xmlns:local="clr-namespace:WpfMediaDemo"
         mc:Ignorable="d"
         Title="Media Player" Height="670" Width="1386" ResizeMode="CanMinimize" WindowStartupLocation="CenterOwner" BorderThickness="3,3,3,6" BorderBrush="#FF181817" FontSize="14" Loaded="window_loaded" Background="{x:Null}"  Focusable="True">
+    <Window.Resources>
+        <DataTemplate x:Key="MenuItemTemplate1">
+            <Grid/>
+        </DataTemplate>
+    </Window.Resources>
 
     <Canvas HorizontalAlignment="Center" Height="630" VerticalAlignment="Top" Width="1380" RenderTransformOrigin="0.5,0.5" Background="#FFC5C1C1" KeyDown="keyPress" KeyUp="keyUp">
         <Canvas.RenderTransform>
@@ -17,7 +22,7 @@
             </TransformGroup>
         </Canvas.RenderTransform>
         <Border BorderBrush="Black" BorderThickness="1" Height="498" Canvas.Left="11" Canvas.Top="67" Width="1361" Background="#FFF6F1F1" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <MediaElement x:Name="me" Margin="0,-3,-2,0" Stretch="Fill" RenderTransformOrigin="0.496,0.027" Source="/player_logo.png" Height="499" VerticalAlignment="Top" MouseLeftButtonDown="me_MouseLeftButtonDown" KeyDown="keyPress" KeyUp="keyUp">
+            <MediaElement x:Name="me" Margin="0,-3,-2,0" Stretch="Fill" RenderTransformOrigin="0.496,0.027" Source="/player_logo.png" Height="499" VerticalAlignment="Top" MouseLeftButtonDown="me_MouseLeftButtonDown" KeyDown="keyPress" KeyUp="keyUp" Drop="me_Drop" DragOver="me_DragOver">
                 <MediaElement.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -30,11 +35,14 @@
         </Border>
 
 
-        <Button x:Name="b1" Content="Play" Canvas.Left="17" Canvas.Top="575" Width="105" Height="47" Background="#FFD9D5D4" FontWeight="Bold" FontSize="18" Click="b1_Click" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0,0,0,0"/>
+        <Button x:Name="b1"  Canvas.Left="17" Canvas.Top="575" Width="105" Height="47" Background="#FFD9D5D4" FontWeight="Bold" FontSize="18" Click="b1_Click" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0,0,0,0">
+            <Image  x:Name="btnImage" Source="Resources/play.png">
+            </Image>
+        </Button>
         <Button x:Name="b3" Content="Stop" Canvas.Left="125" Canvas.Top="576" Width="99" Height="47" Background="#FFD9D5D4" FontWeight="Bold" FontSize="18" Click="b3_Click" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0,0,0,0"/>
         <Button x:Name="Browse" Content="Browse Video / Audio" Canvas.Left="1096" Canvas.Top="10" Width="269" Height="48" Background="#FFC8C3CC" FontWeight="Bold" BorderBrush="#FFFAF6F6" FontSize="18" Click="b5_Click"/>
 
-        
+
 
         <Image x:Name="img" Stretch="None"/>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -46,6 +54,10 @@
         <Slider x:Name="VolumeSlider" Canvas.Left="1239" Canvas.Top="585" Width="120" HorizontalAlignment="Center" Height="28" VerticalAlignment="Top" BorderBrush="{x:Null}" Foreground="#FFE5E5E5" ValueChanged="Slider_ValueChanged" FocusVisualStyle="{x:Null}" IsTabStop="False"/>
         <Image Height="48" Canvas.Left="1203" Canvas.Top="571" Width="24" Source="speaker.png"/>
         <Label x:Name="lblVolumePrecentage" Content="" Canvas.Left="1233" Canvas.Top="597" Height="26" Width="67" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        
+
+
+
 
 
     </Canvas>
