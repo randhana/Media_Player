@@ -39,7 +39,11 @@
             <Image  x:Name="btnImage" Source="Resources/play.png">
             </Image>
         </Button>
-        <Button x:Name="b3" Content="Stop" Canvas.Left="125" Canvas.Top="576" Width="99" Height="47" Background="#FFD9D5D4" FontWeight="Bold" FontSize="18" Click="b3_Click" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0,0,0,0"/>
+        <Button x:Name="b3" Canvas.Left="125" Canvas.Top="576" Width="99" Height="47" Background="#FFD9D5D4" FontWeight="Bold" FontSize="18" Click="b3_Click" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0,0,0,0">
+            <Image  x:Name="btnImage3" Source="Resources/stop.png">
+            </Image>
+        </Button>
+        
         <Button x:Name="Browse" Content="Browse Video / Audio" Canvas.Left="1096" Canvas.Top="10" Width="269" Height="48" Background="#FFC8C3CC" FontWeight="Bold" BorderBrush="#FFFAF6F6" FontSize="18" Click="b5_Click"/>
 
 
