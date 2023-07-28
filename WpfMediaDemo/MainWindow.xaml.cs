@@ -75,7 +75,11 @@ namespace WpfMediaDemo
             // stop the running media element using same LoadedBehiour property
             me.LoadedBehavior = MediaState.Stop;
             me.LoadedBehavior =MediaState.Close;
-            
+            b1.IsEnabled = false;
+           
+            currentFilename = null;
+
+
 
             // Show the logo image and hide the MediaElement
             logoImage.Visibility = Visibility.Visible;
@@ -109,6 +113,10 @@ namespace WpfMediaDemo
                 me.Source = obj;
                 // now url is successfully set to MediaElement. Next step is to play the Media Element
                 // this is done by MediaState built-in class
+
+                // Reset the playback position to the beginning of the media
+                me.Position = TimeSpan.Zero;
+
                 MediaState opt = MediaState.Play;
                 // now attach this play state to MediaElement using its important property LoadedBehaviour
                 me.LoadedBehavior = opt;
@@ -134,8 +142,10 @@ namespace WpfMediaDemo
                 fd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 // display the dialog
                 fd.ShowDialog();
+
                 // get the currently selected video / audio file path and store it in string variable
-                string filename = fd.FileName + currentFilename;
+                //string filename = fd.FileName + currentFilename;
+                string filename = fd.FileName;
                 return filename;
             }
             catch (Exception e1)
@@ -147,6 +157,7 @@ namespace WpfMediaDemo
 
         public void playMedia(string filename)
         {
+            
             currentFilename = filename;
             if (currentFilename != "")
             {
@@ -156,11 +167,17 @@ namespace WpfMediaDemo
 
                 // now write code for the media play 
                 Uri u = new Uri(filename);
+
                 // set this URI object to Media Element
                 me.Source = u;
+
                 // set the volume (optional)
                 me.Volume = 100.5;
+                // Reset the playback position to the beginning of the media
+
+                me.Position = TimeSpan.Zero;
                 // start the video using LoadedBehiour Property
+
                 MediaState opt = MediaState.Play;
                 me.LoadedBehavior = opt;
 
@@ -221,17 +238,24 @@ namespace WpfMediaDemo
             // toggle between play and pause based on the current state
             if (isPlaying)
             {
-                MediaState uc = MediaState.Pause;
+                /*MediaState uc = MediaState.Pause;
                 me.LoadedBehavior = uc;
+                isPlaying = false;
+                ChangeIcon("play.png");*/
+                me.LoadedBehavior = MediaState.Pause;
                 isPlaying = false;
                 ChangeIcon("play.png");
 
             }
             else
             {
-                MediaState ms = MediaState.Play;
+                /*MediaState ms = MediaState.Play;
                 // start the video using LoadedBehiour
                 me.LoadedBehavior = ms;
+                isPlaying = true;
+                ChangeIcon("pause.png");*/
+
+                me.LoadedBehavior = MediaState.Play;
                 isPlaying = true;
                 ChangeIcon("pause.png");
 

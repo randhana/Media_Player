@@ -12,7 +12,7 @@
         </DataTemplate>
     </Window.Resources>
 
-    <Canvas HorizontalAlignment="Center" Height="630" VerticalAlignment="Top" Width="1380" RenderTransformOrigin="0.5,0.5" Background="#FFC5C1C1" KeyDown="keyPress" KeyUp="keyUp">
+    <Canvas HorizontalAlignment="Center" Height="633" VerticalAlignment="Top" Width="1380" RenderTransformOrigin="0.5,0.5" Background="#FFC5C1C1" KeyDown="keyPress" KeyUp="keyUp" Margin="0,-3,0,0">
         <Canvas.RenderTransform>
             <TransformGroup>
                 <ScaleTransform/>
@@ -43,7 +43,7 @@
             <Image  x:Name="btnImage3" Source="Resources/stop.png">
             </Image>
         </Button>
-        
+
         <Button x:Name="Browse" Content="Browse Video / Audio" Canvas.Left="1096" Canvas.Top="10" Width="269" Height="48" Background="#FFC8C3CC" FontWeight="Bold" BorderBrush="#FFFAF6F6" FontSize="18" Click="b5_Click"/>
 
 
@@ -64,7 +64,7 @@
         <Slider x:Name="VolumeSlider" Canvas.Left="1239" Canvas.Top="585" Width="120" HorizontalAlignment="Center" Height="28" VerticalAlignment="Top" BorderBrush="{x:Null}" Foreground="#FFE5E5E5" ValueChanged="Slider_ValueChanged" FocusVisualStyle="{x:Null}" IsTabStop="False"/>
         <Image Height="48" Canvas.Left="1203" Canvas.Top="571" Width="24" Source="speaker.png"/>
         <Label x:Name="lblVolumePrecentage" Content="" Canvas.Left="1233" Canvas.Top="597" Height="26" Width="67" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        
+
 
 
 
