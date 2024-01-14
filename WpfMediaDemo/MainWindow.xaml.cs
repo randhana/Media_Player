@@ -23,6 +23,8 @@ using System.Runtime.InteropServices;
 using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 using KeyEventHandler = System.Windows.Forms.KeyEventHandler;
 using MessageBox = System.Windows.Forms.MessageBox;
+using System.Runtime.InteropServices.ComTypes;
+
 namespace WpfMediaDemo
 {
 
@@ -30,7 +32,7 @@ namespace WpfMediaDemo
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    
+
 
     public partial class MainWindow : Window
     {
@@ -51,9 +53,9 @@ namespace WpfMediaDemo
 
             me.LoadedBehavior = MediaState.Manual;
             me.Volume = VolumeSlider.Value / 100.0; // Set initial volume based on the slider value
-            
+
         }
-       
+
 
         // Button Click Event Handler
         private void b1_Click(object sender, RoutedEventArgs e)
@@ -74,11 +76,7 @@ namespace WpfMediaDemo
         {
             // stop the running media element using same LoadedBehiour property
             me.LoadedBehavior = MediaState.Stop;
-            me.LoadedBehavior =MediaState.Close;
-            b1.IsEnabled = false;
-           
-            currentFilename = null;
-
+            me.LoadedBehavior = MediaState.Close;
 
 
             // Show the logo image and hide the MediaElement
@@ -94,7 +92,7 @@ namespace WpfMediaDemo
         // Broswe Button Code
         private void b5_Click(object sender, RoutedEventArgs e)
         {
-            
+
             playMedia(openMediaFile());
         }
 
@@ -113,10 +111,6 @@ namespace WpfMediaDemo
                 me.Source = obj;
                 // now url is successfully set to MediaElement. Next step is to play the Media Element
                 // this is done by MediaState built-in class
-
-                // Reset the playback position to the beginning of the media
-                me.Position = TimeSpan.Zero;
-
                 MediaState opt = MediaState.Play;
                 // now attach this play state to MediaElement using its important property LoadedBehaviour
                 me.LoadedBehavior = opt;
@@ -129,24 +123,23 @@ namespace WpfMediaDemo
 
         private string openMediaFile()
         {
-            // this will play any video / audio files dynamically
-            // use openfile file dialog. WPF does not support openfile dialog. So we should add the WinForms reference
-            // here. I ll show now. watch plz.
-            // create open file dialog
             try
             {
                 OpenFileDialog fd = new OpenFileDialog();
-                // set the filters
                 fd.Filter = "MP4 File (*.mp4)|*.mp4|3GP File (*.3gp)|*.3gp|Audio File (*.wma)|*.wma|MOV File (*.mov)|*.mov|AVI File (*.avi)|*.avi|Flash Video(*.flv)|*.flv|Video File (*.wmv)|*.wmv|MPEG-2 File (*.mpeg)|*.mpeg|WebM Video (*.webm)|*.webm|All files (*.*)|*.*";
-                // set the initial directory optional
                 fd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                // display the dialog
                 fd.ShowDialog();
 
-                // get the currently selected video / audio file path and store it in string variable
-                //string filename = fd.FileName + currentFilename;
-                string filename = fd.FileName;
-                return filename;
+                // Check if a file was selected
+                if (!string.IsNullOrEmpty(fd.FileName))
+                {
+                    currentFilename = fd.FileName;
+                    return currentFilename;
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("No Selection", "Empty");
+                }
             }
             catch (Exception e1)
             {
@@ -155,45 +148,39 @@ namespace WpfMediaDemo
             return null;
         }
 
+
         public void playMedia(string filename)
         {
-            
             currentFilename = filename;
-            if (currentFilename != "")
+            if (!string.IsNullOrEmpty(currentFilename))
             {
-                // display this path of selected video / audio path to the text box called "tb"
-               // tb.Text = filename;
+                // Set the visibility of the MediaElement to Visible
+                me.Visibility = Visibility.Visible;
 
+                // Hide the logo image
+                logoImage.Visibility = Visibility.Collapsed;
 
                 // now write code for the media play 
                 Uri u = new Uri(filename);
-
                 // set this URI object to Media Element
                 me.Source = u;
-
                 // set the volume (optional)
                 me.Volume = 100.5;
-                // Reset the playback position to the beginning of the media
-
-                me.Position = TimeSpan.Zero;
                 // start the video using LoadedBehiour Property
-
                 MediaState opt = MediaState.Play;
                 me.LoadedBehavior = opt;
 
-                //Set Play/Pause button status to default value
+                // Set Play/Pause button status to default value
                 isPlaying = true;
                 isStarted = true;
                 ChangeIcon("pause.png");
-
-
             }
             else
             {
                 System.Windows.Forms.MessageBox.Show("No Selection", "Empty");
             }
-            
         }
+
 
 
         //Backward Button Code
@@ -238,30 +225,23 @@ namespace WpfMediaDemo
             // toggle between play and pause based on the current state
             if (isPlaying)
             {
-                /*MediaState uc = MediaState.Pause;
+                MediaState uc = MediaState.Pause;
                 me.LoadedBehavior = uc;
-                isPlaying = false;
-                ChangeIcon("play.png");*/
-                me.LoadedBehavior = MediaState.Pause;
                 isPlaying = false;
                 ChangeIcon("play.png");
 
             }
             else
             {
-                /*MediaState ms = MediaState.Play;
+                MediaState ms = MediaState.Play;
                 // start the video using LoadedBehiour
                 me.LoadedBehavior = ms;
-                isPlaying = true;
-                ChangeIcon("pause.png");*/
-
-                me.LoadedBehavior = MediaState.Play;
                 isPlaying = true;
                 ChangeIcon("pause.png");
 
             }
         }
-        
+
         // Seek backward
         private void SeekBackward()
         {
@@ -306,50 +286,50 @@ namespace WpfMediaDemo
             else if (e.Key == Key.P)
             {
                 PauseButton();
-                
+
             }
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            
+
             double volume = VolumeSlider.Value;
             double volumePercentage = volume / VolumeSlider.Maximum; // Calculate the volume percentage
 
             double adjustedVolume = volumePercentage * 100.0; // Scale the volume to a range of 0 to 100
 
             me.Volume = adjustedVolume / 100.0; // Scale the adjusted volume to a range of 0.0 to 1.0
-           
 
-            lblVolumePrecentage.Content = ((int) adjustedVolume).ToString() +"%";   //show current volume as a precentage
+
+            lblVolumePrecentage.Content = ((int)adjustedVolume).ToString() + "%";   //show current volume as a precentage
         }
 
         //Full screen
         private void me_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            
+
             DateTime clickTime = DateTime.Now;
             TimeSpan elapsedTime = clickTime - lastClickTime;
             lastClickTime = clickTime;
 
             if (elapsedTime.TotalMilliseconds < 500) // Check if the elapsed time is less than 500 milliseconds (indicating a double-click)
             {
-                
-                ToggleFullScreen();
-                
 
-                
+                ToggleFullScreen();
+
+
+
             }
         }
 
         private void ToggleFullScreen()
         {
             var fullScreen = new FullScreen();
-            
+
 
             if (WindowState == WindowState.Maximized)
             {
-                
+
             }
             else
             {
@@ -365,7 +345,7 @@ namespace WpfMediaDemo
                 this.Hide();
 
                 fullScreen.Show();
-               
+
 
                 fullScreen.WindowStyle = WindowStyle.None;
                 fullScreen.WindowState = WindowState.Maximized;
