@@ -404,6 +404,7 @@ namespace WpfMediaDemo
 
         }
 
+
         private void tb_TextChanged(object sender, TextChangedEventArgs e)
         {
 

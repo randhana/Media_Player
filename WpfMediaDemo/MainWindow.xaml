@@ -44,7 +44,7 @@
             </Image>
         </Button>
 
-        <Button x:Name="Browse" Content="Browse Video / Audio" Canvas.Left="1096" Canvas.Top="10" Width="269" Height="48" Background="#FFC8C3CC" FontWeight="Bold" BorderBrush="#FFFAF6F6" FontSize="18" Click="b5_Click"/>
+        <Button x:Name="Browse" Content="Browse" Canvas.Left="1096" Canvas.Top="10" Width="269" Height="48" Background="#FFC8C3CC" FontWeight="Bold" BorderBrush="#FFFAF6F6" FontSize="18" Click="b5_Click"/>
 
 
 

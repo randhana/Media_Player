@@ -10,6 +10,7 @@
     <Grid>
         <Border BorderBrush="Black" BorderThickness="1">
             <MediaElement x:Name="FullScreenMediaPlayer" />
+            
         </Border>
     </Grid>
 </Window>
